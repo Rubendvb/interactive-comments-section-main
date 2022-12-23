@@ -1,60 +1,50 @@
 import { useEffect, useState } from "react";
 
-import Plus from "/src/assets/images/icon-plus.svg";
-import Minus from "/src/assets/images/icon-minus.svg";
-import Reply from "/src/assets/images/icon-reply.svg";
-
 import "/src/assets/sass/App.scss";
 
 import data from "../data/data.json";
+import Card from "../components/Card";
 
-type IComments = typeof data["comments"][1];
+export type IComments = typeof data["comments"][1];
 
 function App() {
-  const [comments, setComments] = useState<IComments[]>(data["comments"]);
+  const [comments, setComments] = useState<IComments[]>([]);
+
+  const loadComments = () => {
+    setComments(data["comments"]);
+  };
+
+  // const item = comments[0];
+
+  // const comment1 = {
+  //   id: 5,
+  //   content:
+  //     "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
+  //   createdAt: "1 week ago",
+  //   score: 4,
+  //   replyingTo: "maxblagun",
+  //   user: {
+  //     image: {
+  //       png: "assets/avatars/image-ramsesmiron.png",
+  //       webp: "assets/avatars/image-ramsesmiron.webp",
+  //     },
+  //     username: "ramsesmiron",
+  //   },
+  // };
+
+  // item.replies.push(comment1);
 
   useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(comments));
-  }, [comments]);
+
+    loadComments();
+  }, []);
 
   return (
     <div className="containerApp">
       {comments &&
         comments.map((comment) => {
-          return (
-            <div className="card" key={comment.id}>
-              <div className="card__header">
-                <img
-                  src={comment.user.image.png}
-                  alt={comment.user.username}
-                  className="card__header--img"
-                />
-                <span className="card__header--name">
-                  {comment.user.username}
-                </span>
-                <span className="card__header--date">{comment.createdAt}</span>
-              </div>
-
-              <div className="card__main">
-                <p className="card__main--paragraph">{comment.content}</p>
-              </div>
-
-              <div className="card__footer">
-                <div className="card__footer--point">
-                  <img src={Plus} alt="" />
-                  <span className="card__footer--point-number">
-                    {comment.score}
-                  </span>
-                  <img src={Minus} alt="" />
-                </div>
-
-                <div className="card__footer--reply">
-                  <img src={Reply} alt="" />
-                  <div className="card__footer--reply-text">Reply</div>
-                </div>
-              </div>
-            </div>
-          );
+          return <Card key={comment.id} {...comment} />;
         })}
     </div>
   );

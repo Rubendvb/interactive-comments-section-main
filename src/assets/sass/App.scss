@@ -40,6 +40,11 @@
       font-weight: 300;
       color: v.$Grayish-Blue;
       line-height: 1.4;
+
+      &-replyinTo {
+        color: v.$Moderate-blue;
+        font-weight: 500;
+      }
     }
   }
 
@@ -76,4 +81,13 @@
       }
     }
   }
+}
+
+.containerReply {
+  margin-left: 1.125rem;
+  border-left: solid 2px v.$Light-gray;
+}
+
+.cardd {
+  color: blue;
 }
