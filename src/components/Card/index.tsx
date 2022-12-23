@@ -19,6 +19,15 @@ export default function Card({
   replies,
 }: IComments) {
   const [form, setForm] = useState(false);
+  const [getId, setGetId] = useState(Number);
+
+  function getInfo(form: boolean, id: number) {
+    setForm(form);
+
+    if (id !== getId) {
+      setGetId(id);
+    }
+  }
 
   return (
     <div key={id}>
@@ -41,7 +50,10 @@ export default function Card({
             <span className="card__footer--point-number">{score}</span>
             <img src={Minus} alt="" />
           </div>
-          <div className="card__footer--reply" onClick={() => setForm(!form)}>
+          <div
+            className="card__footer--reply"
+            onClick={() => getInfo(!form, id)}
+          >
             <img src={Reply} alt="" />
             <span className="card__footer--reply-text">Reply</span>
           </div>
@@ -50,7 +62,14 @@ export default function Card({
 
       <div className="containerReply">
         {replies.map((reply) => {
-          return <Answer key={reply.id} {...reply} />;
+          return (
+            <Answer
+              key={reply.id}
+              {...reply}
+              setGetId={setGetId}
+              getId={getId}
+            />
+          );
         })}
       </div>
 

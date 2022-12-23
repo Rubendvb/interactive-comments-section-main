@@ -1,13 +1,18 @@
+import { useState } from "react";
+import { IReply } from "../../@types/comments";
+
 import Plus from "/src/assets/images/icon-plus.svg";
 import Minus from "/src/assets/images/icon-minus.svg";
 import Reply from "/src/assets/images/icon-reply.svg";
 
-import { IReply } from "../../@types/comments";
+import Form from "../Form";
 
 import "./Answer.scss";
 
-import Form from "../Form";
-import { useState } from "react";
+interface AnswerProps extends IReply {
+  setGetId: React.Dispatch<React.SetStateAction<number>>;
+  getId: number;
+}
 
 export default function Answer({
   id,
@@ -16,8 +21,18 @@ export default function Answer({
   content,
   score,
   replyingTo,
-}: IReply) {
+  setGetId,
+  getId,
+}: AnswerProps) {
   const [form, setForm] = useState(false);
+
+  const selectId = (id: number) => {
+    setForm(!form);
+
+    if (id !== getId) {
+      return setGetId(id);
+    }
+  };
 
   return (
     <div>
@@ -45,7 +60,7 @@ export default function Answer({
             <span className="card__footer--point-number">{score}</span>
             <img src={Minus} alt="" />
           </div>
-          <div className="card__footer--reply" onClick={() => setForm(!form)}>
+          <div className="card__footer--reply" onClick={() => selectId(id)}>
             <img src={Reply} alt="" />
             <div className="card__footer--reply-text">Reply</div>
           </div>
