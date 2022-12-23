@@ -1,3 +1,5 @@
+import Answer from "../Answer";
+
 import { IComments } from "../../pages/App";
 
 import Plus from "/src/assets/images/icon-plus.svg";
@@ -29,12 +31,12 @@ export default function Card({
         </div>
         <div className="card__footer">
           <div className="card__footer--point">
-            {/* <img src={Plus} alt="" /> */}
+            <img src={Plus} alt="" />
             <span className="card__footer--point-number">{score}</span>
-            {/* <img src={Minus} alt="" /> */}
+            <img src={Minus} alt="" />
           </div>
           <div className="card__footer--reply">
-            {/* <img src={Reply} alt="" /> */}
+            <img src={Reply} alt="" />
             <div className="card__footer--reply-text">Reply</div>
           </div>
         </div>
@@ -42,45 +44,7 @@ export default function Card({
 
       <div className="containerReply">
         {replies.map((reply) => {
-          return (
-            <div className="card" key={reply.id}>
-              <div className="card__header">
-                <img
-                  src={reply.user.image.png}
-                  alt={reply.user.username}
-                  className="card__header--img"
-                />
-                <span className="card__header--name">
-                  {reply.user.username}
-                </span>
-                <span className="card__header--date">{reply.createdAt}</span>
-              </div>
-
-              <div className="card__main">
-                <p className="card__main--paragraph">
-                  <span className="card__main--paragraph-replyinTo">
-                    @{reply.replyingTo}
-                  </span>{" "}
-                  {reply.content}
-                </p>
-              </div>
-
-              <div className="card__footer">
-                <div className="card__footer--point">
-                  <img src={Plus} alt="" />
-                  <span className="card__footer--point-number">
-                    {reply.score}
-                  </span>
-                  <img src={Minus} alt="" />
-                </div>
-
-                <div className="card__footer--reply">
-                  <img src={Reply} alt="" />
-                  <div className="card__footer--reply-text">Reply</div>
-                </div>
-              </div>
-            </div>
-          );
+          return <Answer key={reply.id} {...reply} />;
         })}
       </div>
     </div>
