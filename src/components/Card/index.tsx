@@ -1,11 +1,17 @@
-import Answer from "../Answer";
-import "./Card.scss";
-
+import { useEffect, useState } from "react";
 import { IComments } from "../../pages/App";
+import { ICurrentUser } from "../../@types/comments";
+
+import "./Card.scss";
 
 import Plus from "/src/assets/images/icon-plus.svg";
 import Minus from "/src/assets/images/icon-minus.svg";
 import Reply from "/src/assets/images/icon-reply.svg";
+
+import Answer from "../Answer";
+import Form from "../Form";
+
+import data from "../../data/data.json";
 
 export default function Card({
   id,
@@ -15,6 +21,19 @@ export default function Card({
   score,
   replies,
 }: IComments) {
+  const [currentUser, setCurrentUser] = useState<ICurrentUser>();
+  const [form, setForm] = useState(false);
+
+  const loadCurrentUser = () => {
+    setCurrentUser(data["currentUser"]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+    loadCurrentUser();
+  }, [currentUser]);
+
   return (
     <div key={id}>
       <div className="card">
@@ -36,9 +55,9 @@ export default function Card({
             <span className="card__footer--point-number">{score}</span>
             <img src={Minus} alt="" />
           </div>
-          <div className="card__footer--reply">
+          <div className="card__footer--reply" onClick={() => setForm(!form)}>
             <img src={Reply} alt="" />
-            <div className="card__footer--reply-text">Reply</div>
+            <span className="card__footer--reply-text">Reply</span>
           </div>
         </div>
       </div>
@@ -48,6 +67,8 @@ export default function Card({
           return <Answer key={reply.id} {...reply} />;
         })}
       </div>
+
+      {form && <Form {...currentUser} />}
     </div>
   );
 }
