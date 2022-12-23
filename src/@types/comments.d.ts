@@ -12,3 +12,11 @@ export interface IReply {
     username: string;
   };
 }
+
+export interface ICurrentUser {
+  image?: {
+    png: string;
+    webp: string;
+  };
+  username?: string;
+}

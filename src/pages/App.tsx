@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
+import { ICurrentUser } from "../@types/comments";
 
 import "/src/assets/sass/App.scss";
 
 import data from "../data/data.json";
 import Card from "../components/Card";
+import Form from "../components/Form";
 
 export type IComments = typeof data["comments"][1];
 
 function App() {
   const [comments, setComments] = useState<IComments[]>([]);
+  const [currentUser, setCurrentUser] = useState<ICurrentUser>();
 
   const loadComments = () => {
     setComments(data["comments"]);
+    setCurrentUser(data["currentUser"]);
   };
 
   // const item = comments[0];
@@ -36,6 +40,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(comments));
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
     loadComments();
   }, []);
@@ -46,6 +51,8 @@ function App() {
         comments.map((comment) => {
           return <Card key={comment.id} {...comment} />;
         })}
+
+      <Form {...currentUser} />
     </div>
   );
 }

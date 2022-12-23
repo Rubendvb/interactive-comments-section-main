@@ -1,4 +1,5 @@
 import Answer from "../Answer";
+import "./Card.scss";
 
 import { IComments } from "../../pages/App";
 
