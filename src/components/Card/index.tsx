@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IComments } from "../../pages/App";
-import { ICurrentUser } from "../../@types/comments";
 
 import "./Card.scss";
 
@@ -11,8 +10,6 @@ import Reply from "/src/assets/images/icon-reply.svg";
 import Answer from "../Answer";
 import Form from "../Form";
 
-import data from "../../data/data.json";
-
 export default function Card({
   id,
   user,
@@ -21,18 +18,7 @@ export default function Card({
   score,
   replies,
 }: IComments) {
-  const [currentUser, setCurrentUser] = useState<ICurrentUser>();
   const [form, setForm] = useState(false);
-
-  const loadCurrentUser = () => {
-    setCurrentUser(data["currentUser"]);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-    loadCurrentUser();
-  }, [currentUser]);
 
   return (
     <div key={id}>
@@ -68,7 +54,7 @@ export default function Card({
         })}
       </div>
 
-      {form && <Form {...currentUser} />}
+      {form && <Form />}
     </div>
   );
 }

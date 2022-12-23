@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import "/src/assets/sass/App.scss";
+import "./App.scss";
 
 import data from "../data/data.json";
 import Card from "../components/Card";

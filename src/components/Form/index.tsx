@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import { ICurrentUser } from "../../@types/comments";
 
-export default function Form({ image, username }: ICurrentUser) {
+import "./Form.scss";
+
+import data from "../../data/data.json";
+
+export default function Form() {
+  const [currentUser, setCurrentUser] = useState<ICurrentUser>();
+
+  const loadCurrentUser = () => {
+    setCurrentUser(data["currentUser"]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+    loadCurrentUser();
+  }, [currentUser]);
+
   return (
     <form className="containerForm">
       <div className="containerForm__textarea">
@@ -15,8 +32,8 @@ export default function Form({ image, username }: ICurrentUser) {
       <div className="containerForm__user">
         <img
           className="containerForm__user--img"
-          src={image?.png}
-          alt={username}
+          src={currentUser?.image?.png}
+          alt={currentUser?.username}
         />
         <button className="containerForm__user--btn">SEND</button>
       </div>

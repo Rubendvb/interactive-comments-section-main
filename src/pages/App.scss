@@ -1,0 +1,10 @@
+@use "../assets/sass/variables" as v;
+
+.containerApp {
+  padding: 16px 0;
+}
+
+.containerReply {
+  margin-left: 1.125rem;
+  border-left: solid 2px v.$Light-gray;
+}
