@@ -4,47 +4,46 @@ import "./App.scss";
 
 import data from "../data/data.json";
 import Card from "../components/Card";
-
-export type IComments = typeof data["comments"][1];
+import { IComment } from "../@types/comments";
 
 function App() {
-  const [comments, setComments] = useState<IComments[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [getId, setGetId] = useState(Number);
+  const [getUser, setGetUser] = useState<IComment>();
+
+  const userId = comments.find((comment) => comment.id === getId);
 
   const loadComments = () => {
     setComments(data["comments"]);
   };
 
-  // const item = comments[0];
-
-  // const comment1 = {
-  //   id: 5,
-  //   content:
-  //     "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
-  //   createdAt: "1 week ago",
-  //   score: 4,
-  //   replyingTo: "maxblagun",
-  //   user: {
-  //     image: {
-  //       png: "assets/avatars/image-ramsesmiron.png",
-  //       webp: "assets/avatars/image-ramsesmiron.webp",
-  //     },
-  //     username: "ramsesmiron",
-  //   },
-  // };
-
-  // item.replies.push(comment1);
+  function loadUser() {
+    // const equalID = comments.filter((comment) => comment.id === getUser?.id);
+    // comments.push(...comments);
+  }
 
   useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(comments));
+    localStorage.setItem("userId", JSON.stringify(userId || []));
 
     loadComments();
-  }, [comments]);
+    loadUser();
+  }, [comments, userId, loadUser]);
 
   return (
     <div className="containerApp">
       {comments &&
         comments.map((comment) => {
-          return <Card key={comment.id} {...comment} />;
+          return (
+            <Card
+              key={comment.id}
+              {...comment}
+              getId={getId}
+              setGetId={setGetId}
+              getUser={getUser}
+              setGetUser={setGetUser}
+            />
+          );
         })}
     </div>
   );

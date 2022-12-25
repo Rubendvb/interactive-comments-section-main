@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IReply } from "../../@types/comments";
+import { AnswerProps, ICard, IComment } from "../../@types/comments";
 
 import Plus from "/src/assets/images/icon-plus.svg";
 import Minus from "/src/assets/images/icon-minus.svg";
@@ -9,10 +9,7 @@ import Form from "../Form";
 
 import "./Answer.scss";
 
-interface AnswerProps extends IReply {
-  setGetId: React.Dispatch<React.SetStateAction<number>>;
-  getId: number;
-}
+interface Props extends AnswerProps, IComment, ICard {}
 
 export default function Answer({
   id,
@@ -23,7 +20,9 @@ export default function Answer({
   replyingTo,
   setGetId,
   getId,
-}: AnswerProps) {
+  getUser,
+  setGetUser,
+}: Props) {
   const [form, setForm] = useState(false);
 
   const selectId = (id: number) => {
@@ -67,7 +66,7 @@ export default function Answer({
         </div>
       </div>
 
-      {form && <Form />}
+      {form && <Form form={form} getUser={getUser} setGetUser={setGetUser} />}
     </div>
   );
 }

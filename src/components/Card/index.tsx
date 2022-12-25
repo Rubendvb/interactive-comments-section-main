@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { IComments } from "../../pages/App";
 
 import "./Card.scss";
 
@@ -9,6 +8,9 @@ import Reply from "/src/assets/images/icon-reply.svg";
 
 import Answer from "../Answer";
 import Form from "../Form";
+import { AnswerProps, ICard, IComment } from "../../@types/comments";
+
+interface Props extends AnswerProps, IComment, ICard {}
 
 export default function Card({
   id,
@@ -17,9 +19,12 @@ export default function Card({
   content,
   score,
   replies,
-}: IComments) {
+  getId,
+  setGetId,
+  getUser,
+  setGetUser,
+}: Props) {
   const [form, setForm] = useState(false);
-  const [getId, setGetId] = useState(Number);
 
   function getInfo(form: boolean, id: number) {
     setForm(form);
@@ -61,19 +66,21 @@ export default function Card({
       </div>
 
       <div className="containerReply">
-        {replies.map((reply) => {
+        {replies?.map((reply) => {
           return (
             <Answer
               key={reply.id}
               {...reply}
               setGetId={setGetId}
               getId={getId}
+              getUser={getUser}
+              setGetUser={setGetUser}
             />
           );
         })}
       </div>
 
-      {form && <Form />}
+      {form && <Form form={form} getUser={getUser} setGetUser={setGetUser} />}
     </div>
   );
 }
