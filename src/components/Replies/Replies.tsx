@@ -1,6 +1,9 @@
+import { useState } from "react";
+
+import ButtonReply from "../ButtonReply/ButtonReply";
+import Form from "../Form/Form";
 import Score from "../Score/Score";
 
-import Reply from "../../assets/images/icon-reply.svg";
 import Delete from "../../assets/images/icon-delete.svg";
 import Edit from "../../assets/images/icon-edit.svg";
 
@@ -12,6 +15,8 @@ interface IReplies {
 }
 
 export default function Replies({ reply }: IReplies) {
+  const [showForm, setShowForm] = useState(false);
+
   const userName = localStorage.getItem("userName");
 
   return (
@@ -53,13 +58,12 @@ export default function Replies({ reply }: IReplies) {
               </div>
             </div>
           ) : (
-            <div className="card__footer__reply">
-              <img src={Reply} alt="" />
-              <span>Reply</span>
-            </div>
+            <ButtonReply setShowForm={setShowForm} />
           )}
         </div>
       </article>
+
+      {showForm ? <Form userReply={reply.user.username} /> : undefined}
     </>
   );
 }

@@ -4,6 +4,7 @@
   background-color: v.$White;
   padding: 1rem;
   border-radius: 10px;
+  margin-bottom: 1rem;
 
   &__form {
     display: flex;
@@ -17,9 +18,16 @@
       border-radius: 10px;
       resize: none;
       padding: 1rem 1.5rem;
+      outline: none;
+      cursor: pointer;
 
       &::placeholder {
         color: v.$Grayish-Blue;
+      }
+
+      &:focus {
+        cursor: text;
+        border-color: v.$Dark-blue;
       }
     }
   }
@@ -37,11 +45,16 @@
       background-color: v.$Moderate-blue;
       color: v.$White;
       font-weight: 500;
-      border: 1px solid v.$Moderate-blue;
+      border: none;
       border-radius: 10px;
       width: 6rem;
       height: 3rem;
       text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: v.$Light-grayish-blue;
+      }
     }
   }
 }

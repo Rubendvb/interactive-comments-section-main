@@ -1,15 +1,15 @@
+import ButtonReply from "../ButtonReply/ButtonReply";
 import Score from "../Score/Score";
-
-import Reply from "../../assets/images/icon-reply.svg";
 
 import { IComment } from "../../@types/comments";
 
 import "./Card.scss";
 interface ICard {
   comment: IComment;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Card({ comment }: ICard) {
+export default function Card({ comment, setShowForm }: ICard) {
   return (
     <>
       <article className="card">
@@ -29,10 +29,7 @@ export default function Card({ comment }: ICard) {
           <div className="card__footer__point">
             <Score score={comment.score} />
           </div>
-          <div className="card__footer__reply">
-            <img src={Reply} alt="" />
-            <span>Reply</span>
-          </div>
+          <ButtonReply setShowForm={setShowForm} />
         </div>
       </article>
     </>

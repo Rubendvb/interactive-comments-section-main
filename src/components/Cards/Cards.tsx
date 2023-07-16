@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import Card from "../Card/Card";
+import Form from "../Form/Form";
 import Replies from "../Replies/Replies";
 
 import { IComment } from "../../@types/comments";
@@ -10,9 +13,15 @@ interface ICard {
 }
 
 export default function Cards({ comment }: ICard) {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <section className="cards">
-      <Card comment={comment} />
+      <Card comment={comment} setShowForm={setShowForm} />
+
+      {showForm ? (
+        <Form showForm={showForm} userReply={comment.user.username} />
+      ) : undefined}
 
       {comment.replies.length > 0 ? (
         <div className="container__reply">
@@ -20,9 +29,7 @@ export default function Cards({ comment }: ICard) {
             <Replies key={reply.id} reply={reply} />
           ))}
         </div>
-      ) : (
-        ""
-      )}
+      ) : undefined}
     </section>
   );
 }
