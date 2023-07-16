@@ -7,6 +7,7 @@ import { IUser } from "./@types/comments";
 
 import { IComment } from "./@types/comments";
 import Cards from "./components/Cards/Cards";
+import Form from "./components/Form/Form";
 
 export default function App() {
   const [user, setUser] = useState<IUser>();
@@ -40,17 +41,7 @@ export default function App() {
           return <Cards key={comment.id} comment={comment} />;
         })}
 
-      <section className="section__addComment">
-        <form className="section__addComment__form" action="">
-          <textarea name="" id="" placeholder="Add a comment..."></textarea>
-
-          <div className="section__addComment__button">
-            <img src={user?.image.png} alt="" />
-
-            <button type="submit">SEND</button>
-          </div>
-        </form>
-      </section>
+      <Form user={user} />
     </main>
   );
 }
