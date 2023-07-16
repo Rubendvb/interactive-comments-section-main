@@ -127,10 +127,10 @@ table {
 
 * {
   box-sizing: border-box;
+  font-family: v.$Font-family;
 }
 
 body {
-  font-family: v.$Font-family;
   font-size: 16px;
   background-color: v.$Very-light-gray;
 }
