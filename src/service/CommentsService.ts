@@ -8,5 +8,5 @@ export const getUser = async () => {
 };
 
 export const getComments = async () => {
-  return await axios.get<IComment>(`${API}/comments`);
+  return await axios.get<IComment[]>(`${API}/comments`);
 };

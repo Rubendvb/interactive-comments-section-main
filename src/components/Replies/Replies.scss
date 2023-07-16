@@ -1,0 +1,31 @@
+@use "../../assets/sass/variables" as v;
+
+.container__reply {
+  padding-left: 1rem;
+  border-left: 2px solid v.$Light-gray;
+}
+
+.card__footer__buttons {
+  display: flex;
+  gap: 1rem;
+
+  .containerButtons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__delete,
+  &__edit {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  &__delete {
+    color: v.$Soft-Red;
+  }
+
+  &__edit {
+    color: v.$Moderate-blue;
+  }
+}
