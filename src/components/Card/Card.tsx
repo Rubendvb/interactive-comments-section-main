@@ -1,11 +1,10 @@
+import Score from "../Score/Score";
+
 import Reply from "../../assets/images/icon-reply.svg";
-import Plus from "../../assets/images/icon-plus.svg";
-import Minus from "../../assets/images/icon-minus.svg";
 
 import { IComment } from "../../@types/comments";
 
 import "./Card.scss";
-
 interface ICard {
   comment: IComment;
 }
@@ -28,9 +27,7 @@ export default function Card({ comment }: ICard) {
         </div>
         <div className="card__footer">
           <div className="card__footer__point">
-            <img src={Plus} alt="" />
-            <span>{comment.score}</span>
-            <img src={Minus} alt="" />
+            <Score score={comment.score} />
           </div>
           <div className="card__footer__reply">
             <img src={Reply} alt="" />

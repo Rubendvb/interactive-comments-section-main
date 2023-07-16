@@ -22,8 +22,6 @@ export default function App() {
     const res = await serviceUser.getComments();
 
     setComments(res.data);
-
-    console.log(res.data);
   };
 
   useEffect(() => {
@@ -39,7 +37,7 @@ export default function App() {
     <main className="main">
       {comments &&
         comments.map((comment) => {
-          return <Cards comment={comment} key={comment.id} />;
+          return <Cards key={comment.id} comment={comment} />;
         })}
 
       <section className="section__addComment">

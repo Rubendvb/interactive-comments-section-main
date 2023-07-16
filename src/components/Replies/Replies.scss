@@ -1,10 +1,5 @@
 @use "../../assets/sass/variables" as v;
 
-.container__reply {
-  padding-left: 1rem;
-  border-left: 2px solid v.$Light-gray;
-}
-
 .card__footer__buttons {
   display: flex;
   gap: 1rem;
