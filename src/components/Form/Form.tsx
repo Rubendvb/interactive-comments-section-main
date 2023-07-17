@@ -6,7 +6,7 @@ import * as serviceUser from "../../service/CommentsService";
 
 interface IForm {
   showForm?: boolean;
-  userReply: string;
+  userReply?: string;
 }
 
 import "./Form.scss";

@@ -1,0 +1,15 @@
+@use "../../assets/sass/variables" as v;
+
+.button__reply {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: v.$Moderate-blue;
+    line-height: 0;
+  }
+}

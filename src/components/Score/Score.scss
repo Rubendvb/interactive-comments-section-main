@@ -1,0 +1,12 @@
+@use "../../assets/sass/variables" as v;
+
+.text__score {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: v.$Moderate-blue;
+  line-height: 0;
+}
+
+.img__score {
+  cursor: pointer;
+}

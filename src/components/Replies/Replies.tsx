@@ -1,11 +1,7 @@
 import { useState } from "react";
 
-import ButtonReply from "../ButtonReply/ButtonReply";
+import Card from "../Card/Card";
 import Form from "../Form/Form";
-import Score from "../Score/Score";
-
-import Delete from "../../assets/images/icon-delete.svg";
-import Edit from "../../assets/images/icon-edit.svg";
 
 import { IReply } from "../../@types/comments";
 
@@ -17,51 +13,9 @@ interface IReplies {
 export default function Replies({ reply }: IReplies) {
   const [showForm, setShowForm] = useState(false);
 
-  const userName = localStorage.getItem("userName");
-
   return (
     <>
-      <article className="card">
-        <div className="card__header">
-          <img
-            className="card__header__img"
-            src={reply.user.image.png}
-            alt={reply.user.username}
-          />
-
-          <span className="card__header__name">{reply.user.username}</span>
-          <span className="card__header__date">{reply.createdAt}</span>
-        </div>
-
-        <div className="card__body">
-          <p className="card__body__text">
-            <span className="card__body__span">@{reply.replyingTo}</span>{" "}
-            {reply.content}
-          </p>
-        </div>
-
-        <div className="card__footer">
-          <div className="card__footer__point">
-            <Score score={reply.score} />
-          </div>
-
-          {userName === reply.user.username ? (
-            <div className="card__footer__buttons">
-              <div className="card__footer__buttons__delete containerButtons">
-                <img src={Delete} alt="" />
-                <span>Delete</span>
-              </div>
-
-              <div className="card__footer__buttons__edit containerButtons">
-                <img src={Edit} alt="" />
-                <span>Edit</span>
-              </div>
-            </div>
-          ) : (
-            <ButtonReply setShowForm={setShowForm} />
-          )}
-        </div>
-      </article>
+      <Card comment={reply} setShowForm={setShowForm} />
 
       {showForm ? <Form userReply={reply.user.username} /> : undefined}
     </>

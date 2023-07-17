@@ -5,28 +5,70 @@
   border-radius: 10px;
   padding: 1rem;
   margin-bottom: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__point {
+    background-color: v.$Very-light-gray;
+    padding: 0.8rem;
+    border-radius: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 6rem;
+  }
 
   &__header {
     align-items: center;
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
+    justify-content: space-between;
     margin-bottom: 1.3rem;
 
-    &__img {
-      width: 32px;
+    &__container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      &__img {
+        width: 32px;
+      }
+
+      &__name,
+      &__you,
+      &__date {
+        font-size: 0.8rem;
+      }
+
+      &__name {
+        color: v.$Dark-blue;
+        font-weight: 700;
+      }
+
+      &__you {
+        color: v.$White;
+        background-color: v.$Moderate-blue;
+        border-radius: 4px;
+        font-weight: 500;
+        padding: 6px;
+      }
+
+      &__date {
+        color: v.$Grayish-Blue;
+        font-weight: 400;
+      }
     }
 
-    &__name {
-      color: v.$Dark-blue;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    &__date {
-      color: v.$Grayish-Blue;
-      font-size: 0.8rem;
-      font-weight: 400;
+    &__reply {
+      position: absolute;
+      bottom: 28px;
+      right: 20px;
     }
   }
 
@@ -51,39 +93,10 @@
     justify-content: space-between;
     align-items: center;
 
-    &__point {
-      background-color: v.$Very-light-gray;
-      padding: 0.8rem;
-      border-radius: 0.6rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 6rem;
-
-      span {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: v.$Moderate-blue;
-        line-height: 0;
-      }
-
-      img {
-        cursor: pointer;
-      }
-    }
-
-    &__reply {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-
-      span {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: v.$Moderate-blue;
-        line-height: 0;
-      }
+    &__buttons {
+      position: absolute;
+      bottom: 28px;
+      right: 20px;
     }
   }
 }

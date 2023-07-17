@@ -23,7 +23,7 @@ export default function Cards({ comment }: ICard) {
         <Form showForm={showForm} userReply={comment.user.username} />
       ) : undefined}
 
-      {comment.replies.length > 0 ? (
+      {comment.replies && comment.replies.length > 0 ? (
         <div className="container__reply">
           {comment.replies.map((reply) => (
             <Replies key={reply.id} reply={reply} />

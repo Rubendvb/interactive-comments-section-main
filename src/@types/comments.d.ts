@@ -23,7 +23,7 @@ export interface IComment {
   createdAt: string;
   score: number;
   user: IUser;
-  replies: IReply[];
+  replies?: IReply[];
 }
 
 export interface ICurrentUser {
