@@ -10,3 +10,7 @@ export const getUser = async () => {
 export const getComments = async () => {
   return await axios.get<IComment[]>(`${API}/comments`);
 };
+
+export const createComment = async (comment: IComment) => {
+  return await axios.post(`${API}/comments`, comment);
+};

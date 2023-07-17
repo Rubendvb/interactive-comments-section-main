@@ -1,11 +1,11 @@
 export interface IUserImage {
-  png: string;
-  webp: string;
+  png?: string;
+  webp?: string;
 }
 
 export interface IUser {
-  image: IUserImage;
-  username: string;
+  image?: IUserImage;
+  username?: string;
 }
 
 export interface IReply {
@@ -18,7 +18,7 @@ export interface IReply {
 }
 
 export interface IComment {
-  id: number;
+  id?: number;
   content: string;
   createdAt: string;
   score: number;
