@@ -63,6 +63,19 @@
           }
         }
       ]
+    },
+    {
+      "content": "hg",
+      "createdAt": "17/07/2023, 01:45:45",
+      "score": 0,
+      "user": {
+        "image": {
+          "png": "assets/avatars/image-juliusomo.png"
+        },
+        "username": "juliusomo"
+      },
+      "replies": [],
+      "id": 3
     }
   ]
 }

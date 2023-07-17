@@ -26,7 +26,7 @@ export default function Card({ comment, setShowForm }: ICard) {
             <div className="card__header__container">
               <img
                 className="card__header__container__img"
-                src={comment.user.image.png}
+                src={comment.user?.image?.png}
                 alt={comment.user.username}
               />
 
