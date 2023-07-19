@@ -65,8 +65,8 @@
       ]
     },
     {
-      "content": "hg",
-      "createdAt": "17/07/2023, 01:45:45",
+      "content": "ola",
+      "createdAt": "19/07/2023, 15:32:14",
       "score": 0,
       "user": {
         "image": {
@@ -76,6 +76,19 @@
       },
       "replies": [],
       "id": 3
+    },
+    {
+      "content": "@ramsesmiron, kdlsks",
+      "createdAt": "19/07/2023, 15:32:22",
+      "score": 0,
+      "user": {
+        "image": {
+          "png": "assets/avatars/image-juliusomo.png"
+        },
+        "username": "juliusomo"
+      },
+      "replies": [],
+      "id": 4
     }
   ]
 }

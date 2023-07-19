@@ -10,23 +10,32 @@ import "./Cards.scss";
 
 interface ICard {
   comment: IComment;
+  loadComments: () => Promise<void>;
 }
 
-export default function Cards({ comment }: ICard) {
+export default function Cards({ comment, loadComments }: ICard) {
   const [showForm, setShowForm] = useState(false);
 
   return (
     <section className="cards">
-      <Card comment={comment} setShowForm={setShowForm} />
+      <Card
+        comment={comment}
+        setShowForm={setShowForm}
+        loadComments={loadComments}
+      />
 
       {showForm ? (
-        <Form showForm={showForm} userReply={comment.user.username} />
+        <Form
+          showForm={showForm}
+          userReply={comment.user.username}
+          loadComments={loadComments}
+        />
       ) : undefined}
 
       {comment.replies && comment.replies.length > 0 ? (
         <div className="container__reply">
           {comment.replies.map((reply) => (
-            <Replies key={reply.id} reply={reply} />
+            <Replies key={reply.id} reply={reply} loadComments={loadComments} />
           ))}
         </div>
       ) : undefined}

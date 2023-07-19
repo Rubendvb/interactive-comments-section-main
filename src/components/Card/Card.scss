@@ -8,6 +8,7 @@
   position: relative;
   display: flex;
   flex-direction: column-reverse;
+  border: none;
 
   @media only screen and (min-width: 768px) {
     flex-direction: row;
@@ -117,6 +118,7 @@
       position: absolute;
       bottom: 28px;
       right: 20px;
+      cursor: pointer;
 
       @media only screen and (min-width: 768px) {
         position: inherit;

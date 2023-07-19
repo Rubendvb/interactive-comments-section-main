@@ -30,3 +30,11 @@ export interface ICurrentUser {
   image: IUserImage;
   username: string;
 }
+
+export interface CommentsContextProps {
+  loadComments: () => void;
+}
+
+export interface CommentsContextProviderProps {
+  children: ReactNode;
+}

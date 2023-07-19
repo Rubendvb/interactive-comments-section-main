@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
-import "/src/assets/sass/App.scss";
+import Form from "./components/Form/Form";
+import Feed from "./components/Feed/Feed";
+
+import { IComment } from "./@types/comments";
 
 import * as serviceUser from "./service/CommentsService";
 
-import { IComment } from "./@types/comments";
-import Cards from "./components/Cards/Cards";
-import Form from "./components/Form/Form";
+import "/src/assets/sass/App.scss";
 
 export default function App() {
   const [comments, setComments] = useState<IComment[]>([]);
@@ -23,12 +24,9 @@ export default function App() {
 
   return (
     <main className="main">
-      {comments &&
-        comments.map((comment) => {
-          return <Cards key={comment.id} comment={comment} />;
-        })}
+      <Feed comments={comments} loadComments={loadComments} />
 
-      <Form />
+      <Form loadComments={loadComments} />
     </main>
   );
 }

@@ -14,3 +14,7 @@ export const getComments = async () => {
 export const createComment = async (comment: IComment) => {
   return await axios.post(`${API}/comments`, comment);
 };
+
+export const deleteComment = async (id: number) => {
+  return await axios.delete(`${API}/comments/${id}`);
+};

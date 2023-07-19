@@ -3,25 +3,18 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { IComment, IUser } from "../../@types/comments";
 
 import * as serviceUser from "../../service/CommentsService";
-
 interface IForm {
   showForm?: boolean;
   userReply?: string;
+  loadComments: () => Promise<void>;
 }
 
 import "./Form.scss";
 
-export default function Form({ showForm, userReply }: IForm) {
+export default function Form({ showForm, userReply, loadComments }: IForm) {
   const [user, setUser] = useState<IUser>();
-
-  const loadUser = async () => {
-    const res = await serviceUser.getUser();
-
-    setUser(res.data);
-  };
-
-  const initialState = {
-    content: "",
+  const [comment, setComment] = useState<IComment>({
+    content: `${userReply ? `@${userReply}, ` : ""}`,
     createdAt: "",
     score: 0,
     user: {
@@ -31,6 +24,12 @@ export default function Form({ showForm, userReply }: IForm) {
       username: user?.username,
     },
     replies: [],
+  });
+
+  const loadUser = async () => {
+    const res = await serviceUser.getUser();
+
+    setUser(res.data);
   };
 
   const getDate = () => {
@@ -39,9 +38,9 @@ export default function Form({ showForm, userReply }: IForm) {
     return today;
   };
 
-  const [comment, setComment] = useState<IComment>(initialState);
-
-  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
@@ -58,6 +57,10 @@ export default function Form({ showForm, userReply }: IForm) {
         username: user?.username,
       },
     });
+
+    setComment({ ...comment, content: "" });
+
+    loadComments();
   };
 
   useEffect(() => {
@@ -77,10 +80,10 @@ export default function Form({ showForm, userReply }: IForm) {
           method="POST"
         >
           <textarea
+            placeholder="Add a comment..."
             name="content"
             onChange={handleInputChange}
-            placeholder="Add a comment..."
-            defaultValue={userReply ? `@${userReply} ` : undefined}
+            value={comment.content}
             required
           ></textarea>
 
