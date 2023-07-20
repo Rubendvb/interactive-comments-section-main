@@ -5,7 +5,7 @@ import { IComment, IUser } from "../../@types/comments";
 import * as serviceUser from "../../service/CommentsService";
 interface IForm {
   showForm?: boolean;
-  userReply?: string;
+  userReply?: IComment;
   loadComments: () => Promise<void>;
 }
 
@@ -14,12 +14,13 @@ import "./Form.scss";
 export default function Form({ showForm, userReply, loadComments }: IForm) {
   const [user, setUser] = useState<IUser>();
   const [comment, setComment] = useState<IComment>({
-    content: `${userReply ? `@${userReply}, ` : ""}`,
+    id: userReply?.id ? userReply?.id + 1 : 0,
+    content: `${userReply ? `@${userReply.user.username}, ` : ""}`,
     createdAt: "",
     score: 0,
     user: {
       image: {
-        png: user?.image?.png,
+        png: user?.image?.png || "",
       },
       username: user?.username,
     },
@@ -47,16 +48,40 @@ export default function Form({ showForm, userReply, loadComments }: IForm) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await serviceUser.createComment({
-      ...comment,
-      createdAt: getDate(),
-      user: {
-        image: {
-          png: user?.image?.png,
+    if (userReply?.replies) {
+      const updateComment = {
+        ...userReply,
+        replies: [
+          ...userReply.replies,
+          {
+            id: userReply.id + 1,
+            content: comment.content,
+            score: 0,
+            replyingTo: userReply.user.username,
+            createdAt: getDate(),
+            user: {
+              image: {
+                png: user?.image?.png || "",
+              },
+              username: user?.username,
+            },
+          },
+        ],
+      };
+
+      await serviceUser.updateComment(userReply.id ?? 0, updateComment);
+    } else {
+      await serviceUser.createComment({
+        ...comment,
+        createdAt: getDate(),
+        user: {
+          image: {
+            png: user?.image?.png || "",
+          },
+          username: user?.username,
         },
-        username: user?.username,
-      },
-    });
+      });
+    }
 
     setComment({ ...comment, content: "" });
 

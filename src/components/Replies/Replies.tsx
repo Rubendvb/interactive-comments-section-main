@@ -23,7 +23,7 @@ export default function Replies({ reply, loadComments }: IReplies) {
       />
 
       {showForm ? (
-        <Form userReply={reply.user.username} loadComments={loadComments} />
+        <Form userReply={reply} loadComments={loadComments} />
       ) : undefined}
     </>
   );

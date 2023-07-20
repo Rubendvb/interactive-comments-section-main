@@ -1,5 +1,5 @@
 export interface IUserImage {
-  png?: string;
+  png: string;
   webp?: string;
 }
 
@@ -13,12 +13,12 @@ export interface IReply {
   content: string;
   createdAt: string;
   score: number;
-  replyingTo: string;
+  replyingTo?: string;
   user: IUser;
 }
 
 export interface IComment {
-  id?: number;
+  id: number;
   content: string;
   createdAt: string;
   score: number;
