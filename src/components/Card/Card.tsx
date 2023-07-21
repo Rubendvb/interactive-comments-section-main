@@ -12,7 +12,7 @@ import { useState } from "react";
 interface ICard {
   comment: IComment;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-  loadComments: () => Promise<void>;
+  loadComments: (dataComments: IComment[]) => void;
 }
 
 export default function Card({ comment, setShowForm, loadComments }: ICard) {

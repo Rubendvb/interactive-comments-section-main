@@ -5,28 +5,32 @@ import Feed from "./components/Feed/Feed";
 
 import { IComment } from "./@types/comments";
 
-import * as serviceUser from "./service/CommentsService";
+import data from "./data/data.json";
 
 import "/src/assets/sass/App.scss";
 
 export default function App() {
   const [comments, setComments] = useState<IComment[]>([]);
 
-  const loadComments = async () => {
-    const res = await serviceUser.getComments();
-
-    setComments(res.data);
+  const loadComments = (dataComments: IComment[]) => {
+    setComments(dataComments);
   };
 
   useEffect(() => {
-    loadComments();
+    if (data.comments) {
+      loadComments(data.comments);
+    }
   }, []);
 
   return (
     <main className="main">
       <Feed comments={comments} loadComments={loadComments} />
 
-      <Form loadComments={loadComments} />
+      <Form
+        comments={comments}
+        setComments={setComments}
+        loadComments={loadComments}
+      />
     </main>
   );
 }

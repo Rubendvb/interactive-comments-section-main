@@ -1,20 +1,18 @@
 import { IComment } from "../../@types/comments";
 import "./Modal.scss";
 
-import * as serviceComment from "../../service/CommentsService";
-
 interface IModal {
   comment: IComment;
-  loadComments: () => Promise<void>;
+  loadComments: (dataComments: IComment[]) => void;
 }
 
 export default function Modal({ comment, loadComments }: IModal) {
   const commentDelete = async (id: number) => {
     if (id) {
-      await serviceComment.deleteComment(id);
+      // await serviceComment.deleteComment(id);
     }
 
-    loadComments();
+    // loadComments();
   };
 
   return (

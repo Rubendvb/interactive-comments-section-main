@@ -3,12 +3,12 @@ import { useState } from "react";
 import Card from "../Card/Card";
 import Form from "../Form/Form";
 
-import { IReply } from "../../@types/comments";
+import { IComment, IReply } from "../../@types/comments";
 
 import "./Replies.scss";
 interface IReplies {
   reply: IReply;
-  loadComments: () => Promise<void>;
+  loadComments: (dataComments: IComment[]) => void;
 }
 
 export default function Replies({ reply, loadComments }: IReplies) {

@@ -10,7 +10,7 @@ import "./Cards.scss";
 
 interface ICard {
   comment: IComment;
-  loadComments: () => Promise<void>;
+  loadComments: (dataComments: IComment[]) => void;
 }
 
 export default function Cards({ comment, loadComments }: ICard) {

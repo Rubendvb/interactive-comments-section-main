@@ -1,11 +1,11 @@
 export interface IUserImage {
   png: string;
-  webp?: string;
+  webp: string;
 }
 
 export interface IUser {
-  image?: IUserImage;
-  username?: string;
+  image: IUserImage;
+  username: string;
 }
 
 export interface IReply {
@@ -13,7 +13,7 @@ export interface IReply {
   content: string;
   createdAt: string;
   score: number;
-  replyingTo?: string;
+  replyingTo: string;
   user: IUser;
 }
 
@@ -23,16 +23,12 @@ export interface IComment {
   createdAt: string;
   score: number;
   user: IUser;
-  replies?: IReply[];
+  replies: IReply[];
 }
 
 export interface ICurrentUser {
   image: IUserImage;
   username: string;
-}
-
-export interface CommentsContextProps {
-  loadComments: () => void;
 }
 
 export interface CommentsContextProviderProps {

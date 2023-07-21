@@ -3,7 +3,7 @@ import Cards from "../Cards/Cards";
 
 interface IFeed {
   comments: IComment[];
-  loadComments: () => Promise<void>;
+  loadComments: (dataComments: IComment[]) => void;
 }
 
 export default function Feed({ comments, loadComments }: IFeed) {
