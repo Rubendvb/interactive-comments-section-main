@@ -3,8 +3,8 @@ import { IComment } from "../../@types/comments";
 import Cards from "../Cards/Cards";
 
 export interface IFeed {
-  comments?: IComment[];
-  setComments?: React.Dispatch<React.SetStateAction<IComment[]>>;
+  comments: IComment[];
+  setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 }
 
 export default function Feed({ comments, setComments }: IFeed) {
@@ -22,7 +22,14 @@ export default function Feed({ comments, setComments }: IFeed) {
     <>
       {comments &&
         comments.map((comment) => {
-          return <Cards key={comment.id} comment={comment} />;
+          return (
+            <Cards
+              key={comment.id}
+              comment={comment}
+              comments={comments}
+              setComments={setComments}
+            />
+          );
         })}
     </>
   );

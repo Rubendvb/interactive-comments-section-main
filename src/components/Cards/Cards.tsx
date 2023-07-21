@@ -10,21 +10,34 @@ import "./Cards.scss";
 
 interface ICard {
   comment: IComment;
+  comments: IComment[];
+  setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 }
 
-export default function Cards({ comment }: ICard) {
+export default function Cards({ comment, comments, setComments }: ICard) {
   const [showForm, setShowForm] = useState(false);
 
   return (
     <section className="cards">
       <Card comment={comment} setShowForm={setShowForm} />
 
-      {showForm ? <Form showForm={showForm} userReply={comment} /> : undefined}
+      {showForm ? (
+        <Form
+          showForm={showForm}
+          comments={comments}
+          setComments={setComments}
+        />
+      ) : undefined}
 
       {comment.replies && comment.replies.length > 0 ? (
         <div className="container__reply" key={comment.replies.length}>
           {comment.replies.map((reply) => (
-            <Replies key={reply.id} reply={reply} />
+            <Replies
+              key={reply.id}
+              reply={reply}
+              comments={comments}
+              setComments={setComments}
+            />
           ))}
         </div>
       ) : undefined}

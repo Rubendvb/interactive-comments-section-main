@@ -4,13 +4,13 @@ import { IComment, IReply, IUser } from "../../@types/comments";
 
 import data from "../../data/data.json";
 
-interface IForm extends IFeed {
+interface IForm {
   showForm?: boolean;
-  userReply?: IReply | IComment;
+  comments: IComment[];
+  setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 }
 
 import "./Form.scss";
-import { IFeed } from "../Feed/Feed";
 
 export default function Form({ showForm, comments, setComments }: IForm) {
   const [idComment, setIdComment] = useState(5);
@@ -51,6 +51,29 @@ export default function Form({ showForm, comments, setComments }: IForm) {
 
     const existingComments = comments ?? [];
 
+    // if (userReply) {
+    //   const newCommentReply: IReply = {
+    //     ...comment,
+    //     replyingTo: userReply.user.username,
+    //     id: idComment,
+    //     createdAt: getDate(),
+
+    //     user: {
+    //       image: {
+    //         png: user?.image.png ?? "",
+    //         webp: user?.image.webp ?? "",
+    //       },
+    //       username: user?.username ?? "",
+    //     },
+    //   };
+
+    //   userReply.replies.push(newCommentReply);
+
+    //   const updateCommentsArray = [...existingComments, userReply];
+    //   console.log("aqui", updateCommentsArray);
+    // } else {
+    // }
+
     const newComment = {
       ...comment,
       id: idComment,
@@ -75,6 +98,8 @@ export default function Form({ showForm, comments, setComments }: IForm) {
       setComments(updateCommentsArray);
     }
   };
+
+  useEffect(() => {}, [setComments]);
 
   return (
     <>

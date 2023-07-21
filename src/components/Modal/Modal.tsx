@@ -2,7 +2,8 @@ import { IComment, IReply } from "../../@types/comments";
 import "./Modal.scss";
 
 interface IModal {
-  comment: IComment | IReply;
+  comment?: IComment;
+  reply?: IReply;
 }
 
 export default function Modal({ comment }: IModal) {
@@ -33,7 +34,7 @@ export default function Modal({ comment }: IModal) {
           <button
             type="button"
             className="btn btn-danger"
-            onClick={() => commentDelete(comment.id || 0)}
+            onClick={() => commentDelete(comment?.id || 0)}
             data-bs-dismiss="modal"
           >
             YES, DELETE

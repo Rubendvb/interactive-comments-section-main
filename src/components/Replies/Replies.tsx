@@ -1,23 +1,27 @@
 import { useState } from "react";
+import { IComment, IReply } from "../../@types/comments";
 
 import Card from "../Card/Card";
 import Form from "../Form/Form";
 
-import { IReply } from "../../@types/comments";
-
 import "./Replies.scss";
+import CardReply from "../CardReply/CardReply";
 interface IReplies {
   reply: IReply;
+  comments: IComment[];
+  setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 }
 
-export default function Replies({ reply }: IReplies) {
+export default function Replies({ reply, comments, setComments }: IReplies) {
   const [showForm, setShowForm] = useState(false);
 
   return (
     <>
-      <Card comment={reply} setShowForm={setShowForm} />
+      <CardReply reply={reply} setShowForm={setShowForm} />
 
-      {showForm ? <Form userReply={reply} /> : undefined}
+      {showForm ? (
+        <Form comments={comments} setComments={setComments} />
+      ) : undefined}
     </>
   );
 }

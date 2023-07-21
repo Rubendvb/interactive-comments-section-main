@@ -1,33 +1,25 @@
-import ButtonReply from "../ButtonReply/ButtonReply";
+import { IReply } from "../../@types/comments";
+import data from "../../data/data.json";
 import Score from "../Score/Score";
-import Modal from "../Modal/Modal";
 
 import Delete from "../../assets/images/icon-delete.svg";
 import Edit from "../../assets/images/icon-edit.svg";
+import ButtonReply from "../ButtonReply/ButtonReply";
+import Modal from "../Modal/Modal";
 
-import data from "../../data/data.json";
-
-import { IComment, IReply } from "../../@types/comments";
-
-import "./Card.scss";
-interface ICard {
-  comment: IComment;
-  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+interface ICardReply {
   reply: IReply;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Card({ comment, setShowForm }: ICard) {
+export default function CardReply({ reply, setShowForm }: ICardReply) {
   const userName = data.currentUser.username;
 
-  const commentSelecting = (element: IComment | IReply) => {
-    console.log(element);
-  };
-
   return (
-    <>
+    <div>
       <article className="card">
         <div className="card__point">
-          <Score score={comment.score} />
+          <Score score={reply.score} />
         </div>
 
         <div>
@@ -35,31 +27,31 @@ export default function Card({ comment, setShowForm }: ICard) {
             <div className="card__header__container">
               <img
                 className="card__header__container__img"
-                src={comment.user?.image?.png}
-                alt={comment.user.username}
+                src={reply.user?.image?.png}
+                alt={reply.user.username}
               />
 
               <div>
                 <span className="card__header__container__name">
-                  {comment.user.username}
+                  {reply.user.username}
                 </span>
-                {userName === comment.user.username && (
+                {userName === reply.user.username && (
                   <span className="card__header__container__you">you</span>
                 )}
               </div>
 
               <span className="card__header__container__date">
-                {comment.createdAt}
+                {reply.createdAt}
               </span>
             </div>
 
             <div className="card__footer">
-              {userName === comment.user.username ? (
+              {userName === reply.user.username ? (
                 <div className="card__footer__buttons">
                   <div
                     className="card__footer__buttons__delete containerButtons"
                     data-bs-toggle="modal"
-                    data-bs-target={`#exampleModal-${comment.id}`} // Atributo data-bs-target com o ID único do modal gerado pelo comentário
+                    data-bs-target={`#exampleModal-${reply.id}`} // Atributo data-bs-target com o ID único do modal gerado pelo comentário
                   >
                     <img src={Delete} alt="" />
                     <span>Delete</span>
@@ -78,20 +70,20 @@ export default function Card({ comment, setShowForm }: ICard) {
             </div>
           </div>
           <div className="card__body">
-            <p className="card__body__text">{comment.content}</p>
+            <p className="card__body__text">{`@${reply.replyingTo} ${reply.content}`}</p>
           </div>
         </div>
 
         <div
           className="modal fade"
-          id={`exampleModal-${comment.id}`} //ID único do modal gerado pelo comentário
+          id={`exampleModal-${reply.id}`} //ID único do modal gerado pelo comentário
           tabIndex={-1}
-          aria-labelledby={`exampleModalLabel-${comment.id}`}
+          aria-labelledby={`exampleModalLabel-${reply.id}`}
           aria-hidden="true"
         >
-          <Modal comment={comment} />
+          <Modal reply={reply} />
         </div>
       </article>
-    </>
+    </div>
   );
 }
