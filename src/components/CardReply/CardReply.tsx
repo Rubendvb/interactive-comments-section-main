@@ -1,4 +1,4 @@
-import { IReply } from "../../@types/comments";
+import { IComment, IReply } from "../../@types/comments";
 import data from "../../data/data.json";
 import Score from "../Score/Score";
 
@@ -14,6 +14,10 @@ interface ICardReply {
 
 export default function CardReply({ reply, setShowForm }: ICardReply) {
   const userName = data.currentUser.username;
+
+  const commentSelecting = (element: IReply) => {
+    localStorage.setItem("commentSelecting", JSON.stringify(element));
+  };
 
   return (
     <div>
@@ -63,7 +67,10 @@ export default function CardReply({ reply, setShowForm }: ICardReply) {
                   </div>
                 </div>
               ) : (
-                <div className="card__header__reply">
+                <div
+                  className="card__header__reply"
+                  onClick={() => commentSelecting(reply)}
+                >
                   <ButtonReply setShowForm={setShowForm} />
                 </div>
               )}

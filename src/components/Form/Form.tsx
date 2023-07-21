@@ -40,6 +40,17 @@ export default function Form({ showForm, comments, setComments }: IForm) {
     return today;
   };
 
+  // Função auxiliar para ordenar por ID em ordem crescente
+  const compareById = (a: any, b: any) => a.id - b.id;
+
+  const getCommentSelect = () => {
+    const commentSelecting: IComment = JSON.parse(
+      localStorage.getItem("commentSelecting") ?? ""
+    );
+
+    return commentSelecting;
+  };
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -49,57 +60,75 @@ export default function Form({ showForm, comments, setComments }: IForm) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const existingComments = comments ?? [];
+    let commentExist;
+    let idCommentExist: number;
+    let updateCommentsArray;
 
-    // if (userReply) {
-    //   const newCommentReply: IReply = {
-    //     ...comment,
-    //     replyingTo: userReply.user.username,
-    //     id: idComment,
-    //     createdAt: getDate(),
+    try {
+      idCommentExist = getCommentSelect().id;
 
-    //     user: {
-    //       image: {
-    //         png: user?.image.png ?? "",
-    //         webp: user?.image.webp ?? "",
-    //       },
-    //       username: user?.username ?? "",
-    //     },
-    //   };
+      commentExist = comments.find((comment) => comment.id === idCommentExist);
+    } catch (error) {}
 
-    //   userReply.replies.push(newCommentReply);
-
-    //   const updateCommentsArray = [...existingComments, userReply];
-    //   console.log("aqui", updateCommentsArray);
-    // } else {
-    // }
-
-    const newComment = {
-      ...comment,
-      id: idComment,
-      createdAt: getDate(),
-      user: {
-        image: {
-          png: user?.image.png ?? "",
-          webp: user?.image.webp ?? "",
+    if (commentExist) {
+      const newCommentReply: IReply = {
+        ...comment,
+        id: idComment,
+        createdAt: getDate(),
+        replyingTo: getCommentSelect().user.username,
+        user: {
+          image: {
+            png: user?.image.png ?? "",
+            webp: user?.image.webp ?? "",
+          },
+          username: user?.username ?? "",
         },
-        username: user?.username ?? "",
-      },
-    };
+      };
 
-    const updateCommentsArray = [...existingComments, newComment];
+      commentExist.replies.push(newCommentReply);
 
-    localStorage.setItem("comments", JSON.stringify(updateCommentsArray));
+      updateCommentsArray = [
+        ...comments.filter((c) => c.id !== idCommentExist),
+        commentExist,
+      ];
+
+      updateCommentsArray.sort(compareById);
+
+      console.log(updateCommentsArray);
+
+      localStorage.setItem("comments", JSON.stringify(updateCommentsArray));
+
+      if (setComments) {
+        setComments(updateCommentsArray);
+      }
+    } else {
+      const newComment = {
+        ...comment,
+        id: idComment,
+        createdAt: getDate(),
+        user: {
+          image: {
+            png: user?.image.png ?? "",
+            webp: user?.image.webp ?? "",
+          },
+          username: user?.username ?? "",
+        },
+      };
+
+      updateCommentsArray = [...comments, newComment];
+
+      localStorage.setItem("comments", JSON.stringify(updateCommentsArray));
+    }
 
     setIdComment((prevId) => prevId + 1);
     setComment(initialState);
+
+    localStorage.removeItem("commentSelecting");
 
     if (setComments) {
       setComments(updateCommentsArray);
     }
   };
-
-  useEffect(() => {}, [setComments]);
 
   return (
     <>

@@ -7,20 +7,19 @@ import Edit from "../../assets/images/icon-edit.svg";
 
 import data from "../../data/data.json";
 
-import { IComment, IReply } from "../../@types/comments";
+import { IComment } from "../../@types/comments";
 
 import "./Card.scss";
 interface ICard {
   comment: IComment;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-  reply: IReply;
 }
 
 export default function Card({ comment, setShowForm }: ICard) {
   const userName = data.currentUser.username;
 
-  const commentSelecting = (element: IComment | IReply) => {
-    console.log(element);
+  const commentSelecting = (element: IComment) => {
+    localStorage.setItem("commentSelecting", JSON.stringify(element));
   };
 
   return (
@@ -71,7 +70,10 @@ export default function Card({ comment, setShowForm }: ICard) {
                   </div>
                 </div>
               ) : (
-                <div className="card__header__reply">
+                <div
+                  className="card__header__reply"
+                  onClick={() => commentSelecting(comment)}
+                >
                   <ButtonReply setShowForm={setShowForm} />
                 </div>
               )}
