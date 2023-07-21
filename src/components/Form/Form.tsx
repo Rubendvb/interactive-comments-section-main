@@ -1,34 +1,24 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-import { IComment, IUser } from "../../@types/comments";
+import { IComment, IReply, IUser } from "../../@types/comments";
 
 import data from "../../data/data.json";
 
-interface IForm {
+interface IForm extends IFeed {
   showForm?: boolean;
-  userReply?: IComment;
-  comments: IComment[];
-  setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
-  loadComments: (dataComments: IComment[]) => void;
+  userReply?: IReply | IComment;
 }
 
 import "./Form.scss";
+import { IFeed } from "../Feed/Feed";
 
-export default function Form({
-  showForm,
-  userReply,
-  comments,
-  setComments,
-  loadComments,
-}: IForm) {
-  const [user, setUser] = useState<IUser>();
+export default function Form({ showForm, comments, setComments }: IForm) {
   const [idComment, setIdComment] = useState(5);
-  const loadUser = () => {
-    setUser(data.currentUser);
-  };
+
+  const user: IUser = data.currentUser;
 
   const initialState: IComment = {
-    id: idComment,
+    id: 0,
     content: "",
     createdAt: "",
     score: 0,
@@ -52,15 +42,39 @@ export default function Form({
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {};
+  ) => {
+    setComment({ ...comment, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  };
 
-  useEffect(() => {
-    loadUser();
-  }, []);
+    const existingComments = comments ?? [];
+
+    const newComment = {
+      ...comment,
+      id: idComment,
+      createdAt: getDate(),
+      user: {
+        image: {
+          png: user?.image.png ?? "",
+          webp: user?.image.webp ?? "",
+        },
+        username: user?.username ?? "",
+      },
+    };
+
+    const updateCommentsArray = [...existingComments, newComment];
+
+    localStorage.setItem("comments", JSON.stringify(updateCommentsArray));
+
+    setIdComment((prevId) => prevId + 1);
+    setComment(initialState);
+
+    if (setComments) {
+      setComments(updateCommentsArray);
+    }
+  };
 
   return (
     <>
@@ -74,7 +88,7 @@ export default function Form({
             placeholder="Add a comment..."
             name="content"
             onChange={handleInputChange}
-            value={}
+            value={comment.content}
             required
           ></textarea>
 

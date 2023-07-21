@@ -5,18 +5,18 @@ import Modal from "../Modal/Modal";
 import Delete from "../../assets/images/icon-delete.svg";
 import Edit from "../../assets/images/icon-edit.svg";
 
-import { IComment } from "../../@types/comments";
+import data from "../../data/data.json";
+
+import { IComment, IReply } from "../../@types/comments";
 
 import "./Card.scss";
-import { useState } from "react";
 interface ICard {
-  comment: IComment;
+  comment: IComment | IReply;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-  loadComments: (dataComments: IComment[]) => void;
 }
 
-export default function Card({ comment, setShowForm, loadComments }: ICard) {
-  const userName = localStorage.getItem("userName");
+export default function Card({ comment, setShowForm }: ICard) {
+  const userName = data.currentUser.username;
 
   return (
     <>
@@ -84,7 +84,7 @@ export default function Card({ comment, setShowForm, loadComments }: ICard) {
           aria-labelledby={`exampleModalLabel-${comment.id}`}
           aria-hidden="true"
         >
-          <Modal comment={comment} loadComments={loadComments} />
+          <Modal comment={comment} />
         </div>
       </article>
     </>

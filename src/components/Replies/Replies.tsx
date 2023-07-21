@@ -3,28 +3,21 @@ import { useState } from "react";
 import Card from "../Card/Card";
 import Form from "../Form/Form";
 
-import { IComment, IReply } from "../../@types/comments";
+import { IReply } from "../../@types/comments";
 
 import "./Replies.scss";
 interface IReplies {
   reply: IReply;
-  loadComments: (dataComments: IComment[]) => void;
 }
 
-export default function Replies({ reply, loadComments }: IReplies) {
+export default function Replies({ reply }: IReplies) {
   const [showForm, setShowForm] = useState(false);
 
   return (
     <>
-      <Card
-        comment={reply}
-        setShowForm={setShowForm}
-        loadComments={loadComments}
-      />
+      <Card comment={reply} setShowForm={setShowForm} />
 
-      {showForm ? (
-        <Form userReply={reply} loadComments={loadComments} />
-      ) : undefined}
+      {showForm ? <Form userReply={reply} /> : undefined}
     </>
   );
 }
