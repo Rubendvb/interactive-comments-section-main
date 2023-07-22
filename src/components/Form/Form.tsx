@@ -13,8 +13,6 @@ interface IForm {
 import "./Form.scss";
 
 export default function Form({ showForm, comments, setComments }: IForm) {
-  const [idComment, setIdComment] = useState(5);
-
   const user: IUser = data.currentUser;
 
   const initialState: IComment = {
@@ -39,6 +37,22 @@ export default function Form({ showForm, comments, setComments }: IForm) {
 
     return today;
   };
+
+  // Função que pega a largura de cada array de comentários e respostas, somar-los juntos para gerar un id
+  const getId = () => {
+    const elementsComments = comments.length;
+    let elementsReplies = 0;
+
+    for (let i = 0; i < comments.length; i++) {
+      const element = comments[i];
+
+      elementsReplies += element.replies.length;
+    }
+
+    return elementsComments + elementsReplies;
+  };
+
+  const [idComment, setIdComment] = useState(getId());
 
   // Função auxiliar para ordenar por ID em ordem crescente
   const compareById = (a: any, b: any) => a.id - b.id;
@@ -121,6 +135,7 @@ export default function Form({ showForm, comments, setComments }: IForm) {
     }
 
     setIdComment((prevId) => prevId + 1);
+
     setComment(initialState);
 
     localStorage.removeItem("commentSelecting");
