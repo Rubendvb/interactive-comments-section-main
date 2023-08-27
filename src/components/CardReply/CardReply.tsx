@@ -1,4 +1,4 @@
-import { IComment, IReply } from "../../@types/comments";
+import { IReply } from "../../@types/comments";
 import data from "../../data/data.json";
 import Score from "../Score/Score";
 
@@ -77,7 +77,10 @@ export default function CardReply({ reply, setShowForm }: ICardReply) {
             </div>
           </div>
           <div className="card__body">
-            <p className="card__body__text">{`@${reply.replyingTo} ${reply.content}`}</p>
+            <p className="card__body__text">
+              <span className="card__body__text__span">{`@${reply.replyingTo}`}</span>{" "}
+              {reply.content}
+            </p>
           </div>
         </div>
 

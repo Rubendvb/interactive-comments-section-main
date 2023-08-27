@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 import { IComment, IReply, IUser } from "../../@types/comments";
 
@@ -6,13 +6,19 @@ import data from "../../data/data.json";
 
 interface IForm {
   showForm?: boolean;
+  setShowForm?: React.Dispatch<React.SetStateAction<boolean>>;
   comments: IComment[];
   setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 }
 
 import "./Form.scss";
 
-export default function Form({ showForm, comments, setComments }: IForm) {
+export default function Form({
+  showForm,
+  setShowForm,
+  comments,
+  setComments,
+}: IForm) {
   const user: IUser = data.currentUser;
 
   const initialState: IComment = {
@@ -40,19 +46,23 @@ export default function Form({ showForm, comments, setComments }: IForm) {
 
   // Função que pega a largura de cada array de comentários e respostas, somar-los juntos para gerar un id
   const getId = () => {
-    const elementsComments = comments.length;
+    let localComments = localStorage.getItem("comments") ?? "";
+
+    const localCommentsParse: IComment[] =
+      localComments && JSON.parse(localComments);
+
+    let elementsComments = 0;
     let elementsReplies = 0;
 
-    for (let i = 0; i < comments.length; i++) {
-      const element = comments[i];
+    elementsComments = localCommentsParse.length || 4;
 
+    for (let i = 0; i < localCommentsParse.length; i++) {
+      const element = localCommentsParse[i];
       elementsReplies += element.replies.length;
     }
 
-    return elementsComments + elementsReplies;
+    return elementsComments + elementsReplies + 1;
   };
-
-  const [idComment, setIdComment] = useState(getId());
 
   // Função auxiliar para ordenar por ID em ordem crescente
   const compareById = (a: any, b: any) => a.id - b.id;
@@ -64,6 +74,8 @@ export default function Form({ showForm, comments, setComments }: IForm) {
 
     return commentSelecting;
   };
+
+  const [idComment, setIdComment] = useState(getId());
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -82,7 +94,9 @@ export default function Form({ showForm, comments, setComments }: IForm) {
       idCommentExist = getCommentSelect().id;
 
       commentExist = comments.find((comment) => comment.id === idCommentExist);
-    } catch (error) {}
+    } catch (error) {
+      console.log("linha 94", error);
+    }
 
     if (commentExist) {
       const newCommentReply: IReply = {
@@ -108,13 +122,9 @@ export default function Form({ showForm, comments, setComments }: IForm) {
 
       updateCommentsArray.sort(compareById);
 
-      console.log(updateCommentsArray);
-
       localStorage.setItem("comments", JSON.stringify(updateCommentsArray));
 
-      if (setComments) {
-        setComments(updateCommentsArray);
-      }
+      setComments(updateCommentsArray);
     } else {
       const newComment = {
         ...comment,
@@ -134,15 +144,15 @@ export default function Form({ showForm, comments, setComments }: IForm) {
       localStorage.setItem("comments", JSON.stringify(updateCommentsArray));
     }
 
-    setIdComment((prevId) => prevId + 1);
-
     setComment(initialState);
 
     localStorage.removeItem("commentSelecting");
 
-    if (setComments) {
-      setComments(updateCommentsArray);
-    }
+    setComments(updateCommentsArray);
+
+    setIdComment(idComment + 1);
+
+    setShowForm && setShowForm(false);
   };
 
   return (

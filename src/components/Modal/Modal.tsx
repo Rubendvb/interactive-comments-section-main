@@ -1,18 +1,58 @@
 import { IComment, IReply } from "../../@types/comments";
+
 import "./Modal.scss";
 
 interface IModal {
-  comment?: IComment;
+  commentId?: number;
   reply?: IReply;
 }
 
-export default function Modal({ comment }: IModal) {
-  const commentDelete = async (id: number) => {
-    if (id) {
-      // await serviceComment.deleteComment(id);
+export default function Modal({ reply, commentId }: IModal) {
+  const commentsFromLocalStore = localStorage.getItem("comments");
+
+  const comments: IComment[] = commentsFromLocalStore
+    ? JSON.parse(commentsFromLocalStore)
+    : [];
+
+  const commentDelete = async () => {
+    let commentExist;
+
+    const encontrarPosicaoPorId = (comentarioPorId: any) => (comentario: any) =>
+      comentario.id === comentarioPorId;
+
+    if (reply !== undefined) {
+      let commentExistArray = comments.map((c) =>
+        c.replies.find((r) => r.id === reply?.id)
+      );
+
+      for (let i = 0; i < commentExistArray.length; i++) {
+        const element = commentExistArray[i];
+
+        if (element !== undefined) {
+          commentExist = element;
+        }
+      }
+    } else {
+      commentExist = comments.find((c) => c.id === commentId);
     }
 
-    // loadComments();
+    commentExist = comments.findIndex(encontrarPosicaoPorId(commentId));
+
+    comments.splice(commentExist, 1);
+
+    if (commentExist === -1) {
+      commentExist = comments.map((c) =>
+        c.replies.findIndex(encontrarPosicaoPorId(reply?.id))
+      );
+
+      commentExist = commentExist[0];
+
+      comments.find((c) => c.id === reply?.id)?.replies.splice(commentExist, 1);
+    }
+
+    localStorage.setItem("comments", JSON.stringify(comments));
+
+    console.log(commentExist);
   };
 
   return (
@@ -34,7 +74,7 @@ export default function Modal({ comment }: IModal) {
           <button
             type="button"
             className="btn btn-danger"
-            onClick={() => commentDelete(comment?.id || 0)}
+            onClick={() => commentDelete()}
             data-bs-dismiss="modal"
           >
             YES, DELETE

@@ -91,7 +91,7 @@ export default function Card({ comment, setShowForm }: ICard) {
           aria-labelledby={`exampleModalLabel-${comment.id}`}
           aria-hidden="true"
         >
-          <Modal comment={comment} />
+          <Modal commentId={comment.id} />
         </div>
       </article>
     </>

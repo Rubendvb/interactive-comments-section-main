@@ -24,6 +24,7 @@ export default function Cards({ comment, comments, setComments }: ICard) {
       {showForm ? (
         <Form
           showForm={showForm}
+          setShowForm={setShowForm}
           comments={comments}
           setComments={setComments}
         />

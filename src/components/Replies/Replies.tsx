@@ -20,7 +20,12 @@ export default function Replies({ reply, comments, setComments }: IReplies) {
       <CardReply reply={reply} setShowForm={setShowForm} />
 
       {showForm ? (
-        <Form comments={comments} setComments={setComments} />
+        <Form
+          comments={comments}
+          setComments={setComments}
+          showForm={showForm}
+          setShowForm={setShowForm}
+        />
       ) : undefined}
     </>
   );
